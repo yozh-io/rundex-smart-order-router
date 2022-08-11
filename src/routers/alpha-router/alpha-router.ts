@@ -599,6 +599,8 @@ export class AlphaRouter
     token0Balance: CurrencyAmount,
     token1Balance: CurrencyAmount,
     position: Position,
+    factoryAddress: string,
+    initCodeHash: string,
     swapAndAddConfig: SwapAndAddConfig,
     swapAndAddOptions?: SwapAndAddOptions,
     routingConfig: Partial<AlphaRouterConfig> = DEFAULT_ROUTING_CONFIG_BY_CHAIN(
@@ -669,6 +671,8 @@ export class AlphaRouter
         amountToSwap,
         outputBalance.currency,
         TradeType.EXACT_INPUT,
+        factoryAddress,
+        initCodeHash,
         undefined,
         {
           ...DEFAULT_ROUTING_CONFIG_BY_CHAIN(this.chainId),
@@ -788,6 +792,8 @@ export class AlphaRouter
     amount: CurrencyAmount,
     quoteCurrency: Currency,
     tradeType: TradeType,
+    factoryAddress: string,
+    initCodeHash: string,
     swapConfig?: SwapOptions,
     partialRoutingConfig: Partial<AlphaRouterConfig> = {}
   ): Promise<SwapRoute | null> {
@@ -880,7 +886,9 @@ export class AlphaRouter
           quoteToken,
           gasPriceWei,
           tradeType,
-          routingConfig
+          routingConfig,
+          factoryAddress,
+          initCodeHash,
         )
       );
     } else {
@@ -913,7 +921,9 @@ export class AlphaRouter
             quoteToken,
             gasPriceWei,
             tradeType,
-            routingConfig
+            routingConfig,
+            factoryAddress,
+            initCodeHash
           )
         );
       }
@@ -948,6 +958,8 @@ export class AlphaRouter
       tradeType,
       this.chainId,
       routingConfig,
+      factoryAddress,
+      initCodeHash,
       gasModel
     );
 
@@ -969,7 +981,9 @@ export class AlphaRouter
       currencyIn,
       currencyOut,
       tradeType,
-      routeAmounts
+      routeAmounts,
+      factoryAddress,
+      initCodeHash
     );
 
     let methodParameters: MethodParameters | undefined;
@@ -1215,7 +1229,9 @@ export class AlphaRouter
     quoteToken: Token,
     gasPriceWei: BigNumber,
     swapType: TradeType,
-    routingConfig: AlphaRouterConfig
+    routingConfig: AlphaRouterConfig,
+    factoryAddress: string,
+    initCodeHash: string
   ): Promise<{
     routesWithValidQuotes: V2RouteWithValidQuote[];
     candidatePools: CandidatePoolsBySelectionCriteria;
@@ -1234,6 +1250,8 @@ export class AlphaRouter
       subgraphProvider: this.v2SubgraphProvider,
       routingConfig,
       chainId: this.chainId,
+      factoryAddress,
+      initCodeHash,
     });
     const poolsRaw = poolAccessor.getAllPools();
 
@@ -1270,7 +1288,9 @@ export class AlphaRouter
       tokenIn,
       tokenOut,
       pools,
-      maxSwapsPerPath
+      maxSwapsPerPath,
+      factoryAddress,
+      initCodeHash,
     );
 
     if (routes.length == 0) {
@@ -1288,13 +1308,15 @@ export class AlphaRouter
     log.info(
       `Getting quotes for V2 for ${routes.length} routes with ${amounts.length} amounts per route.`
     );
-    const { routesWithQuotes } = await quoteFn(amounts, routes);
+    const { routesWithQuotes } = await quoteFn(amounts, routes, factoryAddress, initCodeHash,);
 
     const gasModel = await this.v2GasModelFactory.buildGasModel(
       this.chainId,
       gasPriceWei,
       this.v2PoolProvider,
-      quoteToken
+      quoteToken,
+      factoryAddress,
+      initCodeHash,
     );
 
     metric.putMetric(
@@ -1324,7 +1346,7 @@ export class AlphaRouter
         if (!quote) {
           log.debug(
             {
-              route: routeToString(route),
+              route: routeToString(route, factoryAddress, initCodeHash),
               amountQuote,
             },
             'Dropping a null V2 quote for route.'
@@ -1341,6 +1363,8 @@ export class AlphaRouter
           quoteToken,
           tradeType: swapType,
           v2PoolProvider: this.v2PoolProvider,
+          factoryAddress,
+          initCodeHash
         });
 
         routesWithValidQuotes.push(routeWithValidQuote);

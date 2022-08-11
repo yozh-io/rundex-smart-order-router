@@ -28,12 +28,16 @@ export interface IV2PoolProvider {
    * Gets the pools for the specified token pairs.
    *
    * @param tokenPairs The token pairs to get.
+   * @param factoryAddress
+   * @param initCodeHash
    * @param [providerConfig] The provider config.
    * @returns A pool accessor with methods for accessing the pools.
    */
   getPools(
     tokenPairs: [Token, Token][],
-    providerConfig?: ProviderConfig
+    factoryAddress: string,
+    initCodeHash: string,
+    providerConfig?: ProviderConfig,
   ): Promise<V2PoolAccessor>;
 
   /**
@@ -41,11 +45,15 @@ export interface IV2PoolProvider {
    *
    * @param tokenA Token A in the pool.
    * @param tokenB Token B in the pool.
+   * @param factoryAddress
+   * @param initCodeHash
    * @returns The pool address and the two tokens.
    */
   getPoolAddress(
     tokenA: Token,
-    tokenB: Token
+    tokenB: Token,
+    factoryAddress: string,
+    initCodeHash: string
   ): { poolAddress: string; token0: Token; token1: Token };
 }
 
@@ -80,7 +88,9 @@ export class V2PoolProvider implements IV2PoolProvider {
 
   public async getPools(
     tokenPairs: [Token, Token][],
-    providerConfig?: ProviderConfig
+    factoryAddress: string,
+    initCodeHash: string,
+    providerConfig?: ProviderConfig,
   ): Promise<V2PoolAccessor> {
     const poolAddressSet: Set<string> = new Set<string>();
     const sortedTokenPairs: Array<[Token, Token]> = [];
@@ -91,7 +101,9 @@ export class V2PoolProvider implements IV2PoolProvider {
 
       const { poolAddress, token0, token1 } = this.getPoolAddress(
         tokenA,
-        tokenB
+        tokenB,
+        factoryAddress,
+        initCodeHash
       );
 
       if (poolAddressSet.has(poolAddress)) {
@@ -140,7 +152,9 @@ export class V2PoolProvider implements IV2PoolProvider {
 
       const pool = new Pair(
         CurrencyAmount.fromRawAmount(token0, reserve0.toString()),
-        CurrencyAmount.fromRawAmount(token1, reserve1.toString())
+        CurrencyAmount.fromRawAmount(token1, reserve1.toString()),
+        factoryAddress,
+        initCodeHash
       );
 
       const poolAddress = sortedPoolAddresses[i]!;
@@ -166,7 +180,7 @@ export class V2PoolProvider implements IV2PoolProvider {
 
     return {
       getPool: (tokenA: Token, tokenB: Token): Pair | undefined => {
-        const { poolAddress } = this.getPoolAddress(tokenA, tokenB);
+        const { poolAddress } = this.getPoolAddress(tokenA, tokenB, factoryAddress, initCodeHash);
         return poolAddressToPool[poolAddress];
       },
       getPoolByAddress: (address: string): Pair | undefined =>
@@ -177,7 +191,9 @@ export class V2PoolProvider implements IV2PoolProvider {
 
   public getPoolAddress(
     tokenA: Token,
-    tokenB: Token
+    tokenB: Token,
+    factoryAddress: string,
+    initCodeHash: string
   ): { poolAddress: string; token0: Token; token1: Token } {
     const [token0, token1] = tokenA.sortsBefore(tokenB)
       ? [tokenA, tokenB]
@@ -191,7 +207,7 @@ export class V2PoolProvider implements IV2PoolProvider {
       return { poolAddress: cachedAddress, token0, token1 };
     }
 
-    const poolAddress = Pair.getAddress(token0, token1);
+    const poolAddress = Pair.getAddress(token0, token1, factoryAddress, initCodeHash);
 
     this.POOL_ADDRESS_CACHE[cacheKey] = poolAddress;
 

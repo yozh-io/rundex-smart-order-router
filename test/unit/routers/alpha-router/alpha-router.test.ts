@@ -75,6 +75,9 @@ import {
 
 const helper = require('../../../../src/routers/alpha-router/functions/calculate-ratio-amount-in');
 
+const factoryAddress = '0x5C69bEe701ef814a2B6a3EDD4B1652CB9cc5aA6f';
+const initCodeHash ='0x96e8ac4277198ff8b6f785478aa9a39f403cb768dd02cbee326c3e7da348845f';
+
 describe('alpha router', () => {
   let mockProvider: sinon.SinonStubbedInstance<BaseProvider>;
   let mockMulticallProvider: sinon.SinonStubbedInstance<UniswapMulticallProvider>;
@@ -181,8 +184,8 @@ describe('alpha router', () => {
     const v2MockPools = [DAI_USDT, USDC_WETH, WETH_USDT, USDC_DAI, WBTC_WETH];
     mockV2PoolProvider = sinon.createStubInstance(V2PoolProvider);
     mockV2PoolProvider.getPools.resolves(buildMockV2PoolAccessor(v2MockPools));
-    mockV2PoolProvider.getPoolAddress.callsFake((tA, tB) => ({
-      poolAddress: Pair.getAddress(tA, tB),
+    mockV2PoolProvider.getPoolAddress.callsFake((tA, tB, factoryAddress, initCodeHash) => ({
+      poolAddress: Pair.getAddress(tA, tB, factoryAddress, initCodeHash),
       token0: tA,
       token1: tB,
     }));
@@ -425,6 +428,8 @@ describe('alpha router', () => {
         amount,
         WRAPPED_NATIVE_CURRENCY[1],
         TradeType.EXACT_INPUT,
+        factoryAddress,
+        initCodeHash,
         undefined,
         { ...ROUTING_CONFIG }
       );
@@ -584,6 +589,8 @@ describe('alpha router', () => {
         amount,
         WRAPPED_NATIVE_CURRENCY[1],
         TradeType.EXACT_INPUT,
+        factoryAddress,
+        initCodeHash,
         undefined,
         { ...ROUTING_CONFIG, protocols: [Protocol.V2, Protocol.V3] }
       );
@@ -679,6 +686,8 @@ describe('alpha router', () => {
         CurrencyAmount.fromRawAmount(USDC, 10000),
         MOCK_ZERO_DEC_TOKEN,
         TradeType.EXACT_INPUT,
+        factoryAddress,
+        initCodeHash,
         undefined,
         { ...ROUTING_CONFIG }
       );
@@ -688,6 +697,8 @@ describe('alpha router', () => {
         CurrencyAmount.fromRawAmount(MOCK_ZERO_DEC_TOKEN, 10000),
         USDC,
         TradeType.EXACT_INPUT,
+        factoryAddress,
+        initCodeHash,
         undefined,
         { ...ROUTING_CONFIG }
       );
@@ -699,6 +710,8 @@ describe('alpha router', () => {
         CurrencyAmount.fromRawAmount(USDC, 10000),
         WRAPPED_NATIVE_CURRENCY[1],
         TradeType.EXACT_INPUT,
+        factoryAddress,
+        initCodeHash,
         undefined,
         { ...ROUTING_CONFIG, protocols: [Protocol.V3] }
       );
@@ -764,6 +777,8 @@ describe('alpha router', () => {
         CurrencyAmount.fromRawAmount(USDC, 10000),
         WRAPPED_NATIVE_CURRENCY[1],
         TradeType.EXACT_INPUT,
+        factoryAddress,
+        initCodeHash,
         undefined,
         { ...ROUTING_CONFIG, protocols: [Protocol.V2] }
       );
@@ -834,6 +849,8 @@ describe('alpha router', () => {
         CurrencyAmount.fromRawAmount(USDC, 10000),
         WRAPPED_NATIVE_CURRENCY[1],
         TradeType.EXACT_INPUT,
+        factoryAddress,
+        initCodeHash,
         swapParams,
         { ...ROUTING_CONFIG, protocols: [Protocol.V3] }
       );
@@ -905,6 +922,8 @@ describe('alpha router', () => {
         CurrencyAmount.fromRawAmount(USDC, 10000),
         WRAPPED_NATIVE_CURRENCY[1],
         TradeType.EXACT_INPUT,
+        factoryAddress,
+        initCodeHash,
         swapParams,
         { ...ROUTING_CONFIG, protocols: [Protocol.V2] }
       );
@@ -1035,6 +1054,8 @@ describe('alpha router', () => {
         CurrencyAmount.fromRawAmount(WRAPPED_NATIVE_CURRENCY[1], 10000),
         USDC,
         TradeType.EXACT_OUTPUT,
+        factoryAddress,
+        initCodeHash,
         undefined,
         { ...ROUTING_CONFIG }
       );
@@ -1125,6 +1146,8 @@ describe('alpha router', () => {
         CurrencyAmount.fromRawAmount(WRAPPED_NATIVE_CURRENCY[1], 10000),
         USDC,
         TradeType.EXACT_OUTPUT,
+        factoryAddress,
+        initCodeHash,
         undefined,
         { ...ROUTING_CONFIG, protocols: [Protocol.V3] }
       );
@@ -1184,6 +1207,8 @@ describe('alpha router', () => {
         CurrencyAmount.fromRawAmount(WRAPPED_NATIVE_CURRENCY[1], 10000),
         USDC,
         TradeType.EXACT_OUTPUT,
+        factoryAddress,
+        initCodeHash,
         undefined,
         { ...ROUTING_CONFIG, protocols: [Protocol.V2] }
       );
@@ -1248,6 +1273,8 @@ describe('alpha router', () => {
         CurrencyAmount.fromRawAmount(WRAPPED_NATIVE_CURRENCY[1], 10000),
         USDC,
         TradeType.EXACT_OUTPUT,
+        factoryAddress,
+        initCodeHash,
         swapParams,
         { ...ROUTING_CONFIG, protocols: [Protocol.V3] }
       );
@@ -1314,6 +1341,8 @@ describe('alpha router', () => {
         CurrencyAmount.fromRawAmount(WRAPPED_NATIVE_CURRENCY[1], 10000),
         USDC,
         TradeType.EXACT_OUTPUT,
+        factoryAddress,
+        initCodeHash,
         swapParams,
         { ...ROUTING_CONFIG, protocols: [Protocol.V2] }
       );
@@ -1389,6 +1418,8 @@ describe('alpha router', () => {
             token0Balance,
             token1Balance,
             position,
+            factoryAddress,
+            initCodeHash,
             SWAP_AND_ADD_CONFIG,
             undefined,
             ROUTING_CONFIG
@@ -1425,6 +1456,8 @@ describe('alpha router', () => {
             token0Balance,
             token1Balance,
             position,
+            factoryAddress,
+            initCodeHash,
             SWAP_AND_ADD_CONFIG,
             undefined,
             ROUTING_CONFIG
@@ -1456,6 +1489,8 @@ describe('alpha router', () => {
             token0Balance,
             token1Balance,
             position,
+            factoryAddress,
+            initCodeHash,
             SWAP_AND_ADD_CONFIG,
             undefined,
             ROUTING_CONFIG
@@ -1485,6 +1520,8 @@ describe('alpha router', () => {
             token0Balance,
             token1Balance,
             position,
+            factoryAddress,
+            initCodeHash,
             SWAP_AND_ADD_CONFIG,
             undefined,
             ROUTING_CONFIG
@@ -1516,6 +1553,8 @@ describe('alpha router', () => {
             token0Balance,
             token1Balance,
             position,
+            factoryAddress,
+            initCodeHash,
             SWAP_AND_ADD_CONFIG,
             undefined,
             ROUTING_CONFIG
@@ -1547,6 +1586,8 @@ describe('alpha router', () => {
             token0Balance,
             token1Balance,
             position,
+            factoryAddress,
+            initCodeHash,
             SWAP_AND_ADD_CONFIG,
             undefined,
             ROUTING_CONFIG
@@ -1580,6 +1621,8 @@ describe('alpha router', () => {
           token0Balance,
           token1Balance,
           position,
+          factoryAddress,
+          initCodeHash,
           SWAP_AND_ADD_CONFIG,
           undefined,
           ROUTING_CONFIG
@@ -1606,6 +1649,8 @@ describe('alpha router', () => {
           token0Balance,
           token1Balance,
           position,
+          factoryAddress,
+          initCodeHash,
           SWAP_AND_ADD_CONFIG,
           undefined,
           ROUTING_CONFIG
@@ -1678,6 +1723,8 @@ describe('alpha router', () => {
           token0Balance,
           token1Balance,
           position,
+          factoryAddress,
+          initCodeHash,
           SWAP_AND_ADD_CONFIG,
           undefined,
           ROUTING_CONFIG
@@ -1731,6 +1778,8 @@ describe('alpha router', () => {
             token0Balance,
             token1Balance,
             position,
+            factoryAddress,
+            initCodeHash,
             SWAP_AND_ADD_CONFIG,
             undefined,
             ROUTING_CONFIG
@@ -1794,6 +1843,8 @@ describe('alpha router', () => {
             token0Balance,
             token1Balance,
             position,
+            factoryAddress,
+            initCodeHash,
             SWAP_AND_ADD_CONFIG,
             undefined,
             ROUTING_CONFIG
@@ -1861,6 +1912,8 @@ describe('alpha router', () => {
             token0Balance,
             token1Balance,
             position,
+            factoryAddress,
+            initCodeHash,
             SWAP_AND_ADD_CONFIG,
             undefined,
             ROUTING_CONFIG
@@ -1939,6 +1992,8 @@ describe('alpha router', () => {
             token0Balance,
             token1Balance,
             position,
+            factoryAddress,
+            initCodeHash,
             SWAP_AND_ADD_CONFIG,
             undefined,
             ROUTING_CONFIG
@@ -2003,6 +2058,8 @@ describe('alpha router', () => {
               token0Balance,
               token1Balance,
               position,
+              factoryAddress,
+              initCodeHash,
               SWAP_AND_ADD_CONFIG,
               undefined,
               ROUTING_CONFIG
@@ -2066,6 +2123,8 @@ describe('alpha router', () => {
               token0Balance,
               token1Balance,
               position,
+              factoryAddress,
+              initCodeHash,
               SWAP_AND_ADD_CONFIG,
               undefined,
               ROUTING_CONFIG
@@ -2111,6 +2170,8 @@ describe('alpha router', () => {
               token0Balance,
               token1Balance,
               position,
+              factoryAddress,
+              initCodeHash,
               SWAP_AND_ADD_CONFIG,
               undefined,
               ROUTING_CONFIG
@@ -2186,6 +2247,8 @@ describe('alpha router', () => {
           token0Balance,
           token1Balance,
           positionPreLiquidity,
+          factoryAddress,
+          initCodeHash,
           SWAP_AND_ADD_CONFIG,
           SWAP_AND_ADD_OPTIONS,
           ROUTING_CONFIG
@@ -2231,6 +2294,8 @@ describe('alpha router', () => {
           token0Balance,
           token1Balance,
           positionPreLiquidity,
+          factoryAddress,
+          initCodeHash,
           SWAP_AND_ADD_CONFIG,
           undefined,
           ROUTING_CONFIG

@@ -24,6 +24,9 @@ import {
   WETH_USDT,
 } from '../../../../test-util/mock-data';
 
+const factoryAddress = '0x5C69bEe701ef814a2B6a3EDD4B1652CB9cc5aA6f';
+const initCodeHash ='0x96e8ac4277198ff8b6f785478aa9a39f403cb768dd02cbee326c3e7da348845f';
+
 describe('compute all v3 routes', () => {
   test('succeeds to compute all routes', async () => {
     const pools = [
@@ -71,14 +74,14 @@ describe('compute all v3 routes', () => {
 describe('compute all v2 routes', () => {
   test('succeeds to compute all routes', async () => {
     const pools = [DAI_USDT, USDC_WETH, WETH_USDT, USDC_DAI, WBTC_WETH];
-    const routes = computeAllV2Routes(USDC, DAI, pools, 3);
+    const routes = computeAllV2Routes(USDC, DAI, pools, 3, factoryAddress, initCodeHash);
 
     expect(routes).toHaveLength(2);
   });
 
   test('succeeds to compute all routes with 1 hop', async () => {
     const pools = [DAI_USDT, USDC_WETH, WETH_USDT, USDC_DAI, WBTC_WETH];
-    const routes = computeAllV2Routes(USDC, DAI, pools, 1);
+    const routes = computeAllV2Routes(USDC, DAI, pools, 1, factoryAddress, initCodeHash);
 
     expect(routes).toHaveLength(1);
   });
@@ -91,12 +94,14 @@ describe('compute all v2 routes', () => {
       WBTC_WETH,
       new Pair(
         CurrencyAmount.fromRawAmount(USDT, 10),
-        CurrencyAmount.fromRawAmount(WBTC, 10)
+        CurrencyAmount.fromRawAmount(WBTC, 10),
+        factoryAddress,
+        initCodeHash
       ),
     ];
 
     // No way to get from USDC to WBTC in 2 hops
-    const routes = computeAllV2Routes(USDC, WBTC, pools, 2);
+    const routes = computeAllV2Routes(USDC, WBTC, pools, 2, factoryAddress, initCodeHash);
 
     expect(routes).toHaveLength(0);
   });

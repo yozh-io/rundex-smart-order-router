@@ -160,7 +160,9 @@ export abstract class IRouter<RoutingConfig> {
    * @abstract
    * @param amount The amount specified by the user. For EXACT_IN swaps, this is the input token amount. For EXACT_OUT swaps, this is the output token.
    * @param quoteCurrency The currency of the token we are returning a quote for. For EXACT_IN swaps, this is the output token. For EXACT_OUT, this is the input token.
-   * @param tradeType The type of the trade, either exact in or exact out.
+   * @param swapType
+   * @param factoryAddress
+   * @param initCodeHash
    * @param [swapOptions] Optional config for executing the swap. If provided, calldata for executing the swap will also be returned.
    * @param [partialRoutingConfig] Optional config for finding the optimal route.
    * @returns The swap route.
@@ -169,6 +171,8 @@ export abstract class IRouter<RoutingConfig> {
     amount: CurrencyAmount,
     quoteCurrency: Currency,
     swapType: TradeType,
+    factoryAddress: string,
+    initCodeHash: string,
     swapOptions?: SwapOptions,
     partialRoutingConfig?: Partial<RoutingConfig>
   ): Promise<SwapRoute | null>;
@@ -179,6 +183,8 @@ export abstract class ISwapToRatio<RoutingConfig, SwapAndAddConfig> {
     token0Balance: CurrencyAmount,
     token1Balance: CurrencyAmount,
     position: Position,
+    factoryAddress: string,
+    initCodeHash: string,
     swapAndAddConfig: SwapAndAddConfig,
     swapAndAddOptions?: SwapAndAddOptions,
     routingConfig?: RoutingConfig

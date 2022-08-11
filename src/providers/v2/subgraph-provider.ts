@@ -55,6 +55,8 @@ const PAGE_SIZE = 1000; // 1k is max possible query size from subgraph.
  */
 export interface IV2SubgraphProvider {
   getPools(
+    factoryAddress?: string,
+    initCodeHash?: string,
     tokenIn?: Token,
     tokenOut?: Token,
     providerConfig?: ProviderConfig
@@ -78,9 +80,11 @@ export class V2SubgraphProvider implements IV2SubgraphProvider {
   }
 
   public async getPools(
+    _factoryAddress?: string,
+    _initCodeHash?: string,
     _tokenIn?: Token,
     _tokenOut?: Token,
-    providerConfig?: ProviderConfig
+    providerConfig?: ProviderConfig,
   ): Promise<V2SubgraphPool[]> {
     let blockNumber = providerConfig?.blockNumber
       ? await providerConfig.blockNumber

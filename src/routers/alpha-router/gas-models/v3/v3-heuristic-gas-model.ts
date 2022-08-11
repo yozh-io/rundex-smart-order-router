@@ -451,7 +451,7 @@ export class V3HeuristicGasModelFactory extends IV3GasModelFactory {
         : route.amount.currency;
 
     // build trade for swap calldata
-    const trade = buildTrade(inputToken, outputToken, route.tradeType, routes);
+    const trade = buildTrade(inputToken, outputToken, route.tradeType, routes, '', '');
     const data = buildSwapMethodParameters(trade, swapConfig).calldata;
     const l1GasUsed = this.getL2ToL1GasUsed(data, overhead);
     // l1BaseFee is L1 Gas Price on etherscan
@@ -482,7 +482,7 @@ export class V3HeuristicGasModelFactory extends IV3GasModelFactory {
         : route.amount.currency;
 
     // build trade for swap calldata
-    const trade = buildTrade(inputToken, outputToken, route.tradeType, routes);
+    const trade = buildTrade(inputToken, outputToken, route.tradeType, routes, '', '');
     const data = buildSwapMethodParameters(trade, swapConfig).calldata;
     // calculates gas amounts based on bytes of calldata, use 0 as overhead.
     const l1GasUsed = this.getL2ToL1GasUsed(data, BigNumber.from(0));

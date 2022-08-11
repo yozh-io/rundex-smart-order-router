@@ -54,6 +54,8 @@ export type V2RouteWithValidQuoteParams = {
   quoteToken: Token;
   tradeType: TradeType;
   v2PoolProvider: IV2PoolProvider;
+  factoryAddress: string;
+  initCodeHash: string;
 };
 /**
  * Represents a quote for swapping on a V2 only route. Contains all information
@@ -80,12 +82,16 @@ export class V2RouteWithValidQuote implements IV2RouteWithValidQuote {
   public tradeType: TradeType;
   public poolAddresses: string[];
   public tokenPath: Token[];
+  public factoryAddress: string;
+  public initCodeHash: string;
 
   public toString(): string {
     return `${this.percent.toFixed(
       2
     )}% QuoteGasAdj[${this.quoteAdjustedForGas.toExact()}] Quote[${this.quote.toExact()}] Gas[${this.gasEstimate.toString()}] = ${routeToString(
-      this.route
+      this.route,
+      this.factoryAddress,
+      this.initCodeHash,
     )}`;
   }
 
@@ -98,6 +104,8 @@ export class V2RouteWithValidQuote implements IV2RouteWithValidQuote {
     quoteToken,
     tradeType,
     v2PoolProvider,
+    factoryAddress,
+    initCodeHash
   }: V2RouteWithValidQuoteParams) {
     this.amount = amount;
     this.rawQuote = rawQuote;
@@ -107,6 +115,8 @@ export class V2RouteWithValidQuote implements IV2RouteWithValidQuote {
     this.gasModel = gasModel;
     this.quoteToken = quoteToken;
     this.tradeType = tradeType;
+    this.factoryAddress = factoryAddress;
+    this.initCodeHash = initCodeHash;
 
     const { gasEstimate, gasCostInToken, gasCostInUSD } =
       this.gasModel.estimateGasCost(this);
@@ -126,7 +136,7 @@ export class V2RouteWithValidQuote implements IV2RouteWithValidQuote {
 
     this.poolAddresses = _.map(
       route.pairs,
-      (p) => v2PoolProvider.getPoolAddress(p.token0, p.token1).poolAddress
+      (p) => v2PoolProvider.getPoolAddress(p.token0, p.token1, factoryAddress, initCodeHash).poolAddress
     );
 
     this.tokenPath = this.route.path;

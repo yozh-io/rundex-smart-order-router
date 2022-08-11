@@ -45,12 +45,16 @@ export class V2HeuristicGasModelFactory extends IV2GasModelFactory {
     chainId: ChainId,
     gasPriceWei: BigNumber,
     poolProvider: IV2PoolProvider,
-    token: Token
+    token: Token,
+    factoryAddress: string,
+    initCodeHash: string
   ): Promise<IGasModel<V2RouteWithValidQuote>> {
     if (token.equals(WRAPPED_NATIVE_CURRENCY[chainId]!)) {
       const usdPool: Pair = await this.getHighestLiquidityUSDPool(
         chainId,
-        poolProvider
+        poolProvider,
+        factoryAddress,
+        initCodeHash
       );
 
       return {
@@ -86,7 +90,9 @@ export class V2HeuristicGasModelFactory extends IV2GasModelFactory {
     const ethPool: Pair | null = await this.getEthPool(
       chainId,
       token,
-      poolProvider
+      poolProvider,
+      factoryAddress,
+      initCodeHash
     );
     if (!ethPool) {
       log.info(
@@ -96,7 +102,9 @@ export class V2HeuristicGasModelFactory extends IV2GasModelFactory {
 
     const usdPool: Pair = await this.getHighestLiquidityUSDPool(
       chainId,
-      poolProvider
+      poolProvider,
+      factoryAddress,
+      initCodeHash
     );
 
     return {
@@ -200,11 +208,13 @@ export class V2HeuristicGasModelFactory extends IV2GasModelFactory {
   private async getEthPool(
     chainId: ChainId,
     token: Token,
-    poolProvider: IV2PoolProvider
+    poolProvider: IV2PoolProvider,
+    factoryAddress: string,
+    initCodeHash: string
   ): Promise<Pair | null> {
     const weth = WRAPPED_NATIVE_CURRENCY[chainId]!;
 
-    const poolAccessor = await poolProvider.getPools([[weth, token]]);
+    const poolAccessor = await poolProvider.getPools([[weth, token]], factoryAddress, initCodeHash);
     const pool = poolAccessor.getPool(weth, token);
 
     if (!pool || pool.reserve0.equalTo(0) || pool.reserve1.equalTo(0)) {
@@ -226,7 +236,9 @@ export class V2HeuristicGasModelFactory extends IV2GasModelFactory {
 
   private async getHighestLiquidityUSDPool(
     chainId: ChainId,
-    poolProvider: IV2PoolProvider
+    poolProvider: IV2PoolProvider,
+    factoryAddress: string,
+    initCodeHash: string
   ): Promise<Pair> {
     const usdTokens = usdGasTokensByChain[chainId];
 
@@ -240,7 +252,7 @@ export class V2HeuristicGasModelFactory extends IV2GasModelFactory {
       usdToken,
       WRAPPED_NATIVE_CURRENCY[chainId]!,
     ]);
-    const poolAccessor = await poolProvider.getPools(usdPools);
+    const poolAccessor = await poolProvider.getPools(usdPools, factoryAddress, initCodeHash);
     const poolsRaw = poolAccessor.getAllPools();
     const pools = _.filter(
       poolsRaw,

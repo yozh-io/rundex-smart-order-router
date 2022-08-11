@@ -82,6 +82,9 @@ const mockPools = [
   USDC_WETH_MEDIUM,
 ];
 
+const factoryAddress = '0x5C69bEe701ef814a2B6a3EDD4B1652CB9cc5aA6f';
+const initCodeHash ='0x96e8ac4277198ff8b6f785478aa9a39f403cb768dd02cbee326c3e7da348845f';
+
 describe('get best swap route', () => {
   let mockPoolProvider: sinon.SinonStubbedInstance<V3PoolProvider>;
   let mockV3GasModel: sinon.SinonStubbedInstance<
@@ -132,7 +135,7 @@ describe('get best swap route', () => {
     mockV2PoolProvider = sinon.createStubInstance(V2PoolProvider);
     mockV2PoolProvider.getPools.resolves(buildMockV2PoolAccessor(v2MockPools));
     mockV2PoolProvider.getPoolAddress.callsFake((tA, tB) => ({
-      poolAddress: Pair.getAddress(tA, tB),
+      poolAddress: Pair.getAddress(tA, tB, factoryAddress, initCodeHash),
       token0: tA,
       token1: tB,
     }));
@@ -209,6 +212,8 @@ describe('get best swap route', () => {
       quoteToken,
       tradeType,
       v2PoolProvider: mockV2PoolProvider,
+      factoryAddress,
+      initCodeHash
     });
   };
 
@@ -263,7 +268,9 @@ describe('get best swap route', () => {
       routesWithQuotes,
       TradeType.EXACT_INPUT,
       ChainId.MAINNET,
-      { ...mockRoutingConfig, distributionPercent: 25 }
+      { ...mockRoutingConfig, distributionPercent: 25 },
+      factoryAddress,
+      initCodeHash
     )!;
 
     const {
@@ -323,7 +330,9 @@ describe('get best swap route', () => {
       routesWithQuotes,
       TradeType.EXACT_INPUT,
       ChainId.MAINNET,
-      { ...mockRoutingConfig, distributionPercent: 25 }
+      { ...mockRoutingConfig, distributionPercent: 25 },
+      factoryAddress,
+      initCodeHash
     )!;
 
     const {
@@ -383,7 +392,9 @@ describe('get best swap route', () => {
       routesWithQuotes,
       TradeType.EXACT_INPUT,
       ChainId.MAINNET,
-      { ...mockRoutingConfig, distributionPercent: 25 }
+      { ...mockRoutingConfig, distributionPercent: 25 },
+      factoryAddress,
+      initCodeHash
     )!;
 
     const {
@@ -450,7 +461,9 @@ describe('get best swap route', () => {
       routesWithQuotes,
       TradeType.EXACT_INPUT,
       ChainId.MAINNET,
-      { ...mockRoutingConfig, distributionPercent: 25 }
+      { ...mockRoutingConfig, distributionPercent: 25 },
+      factoryAddress,
+      initCodeHash
     )!;
 
     const {
@@ -519,7 +532,9 @@ describe('get best swap route', () => {
       routesWithQuotes,
       TradeType.EXACT_INPUT,
       ChainId.MAINNET,
-      { ...mockRoutingConfig, distributionPercent: 25 }
+      { ...mockRoutingConfig, distributionPercent: 25 },
+      factoryAddress,
+      initCodeHash
     )!;
 
     const {
@@ -587,7 +602,9 @@ describe('get best swap route', () => {
       routesWithQuotes,
       TradeType.EXACT_INPUT,
       ChainId.MAINNET,
-      { ...mockRoutingConfig, distributionPercent: 25 }
+      { ...mockRoutingConfig, distributionPercent: 25 },
+      factoryAddress,
+      initCodeHash
     )!;
 
     const {
@@ -660,7 +677,9 @@ describe('get best swap route', () => {
         distributionPercent: 25,
         minSplits: 2,
         maxSplits: 3,
-      }
+      },
+      factoryAddress,
+      initCodeHash
     )!;
 
     const {
@@ -732,7 +751,9 @@ describe('get best swap route', () => {
       routesWithQuotes,
       TradeType.EXACT_INPUT,
       ChainId.MAINNET,
-      { ...mockRoutingConfig, distributionPercent: 25 }
+      { ...mockRoutingConfig, distributionPercent: 25 },
+      factoryAddress,
+      initCodeHash
     )!;
 
     const {
@@ -803,7 +824,9 @@ describe('get best swap route', () => {
       routesWithQuotes,
       TradeType.EXACT_INPUT,
       ChainId.MAINNET,
-      { ...mockRoutingConfig, distributionPercent: 25 }
+      { ...mockRoutingConfig, distributionPercent: 25 },
+      factoryAddress,
+      initCodeHash
     )!;
 
     const {

@@ -151,30 +151,43 @@ export const WBTC_WETH_MEDIUM = new Pool(
   0
 );
 
+const factoryAddress = '0x5C69bEe701ef814a2B6a3EDD4B1652CB9cc5aA6f';
+const initCodeHash ='0x96e8ac4277198ff8b6f785478aa9a39f403cb768dd02cbee326c3e7da348845f';
+
 // Mock V2 Pools
 export const DAI_USDT = new Pair(
   CurrencyAmount.fromRawAmount(DAI, 10000000000),
-  CurrencyAmount.fromRawAmount(USDT, 10000000000)
+  CurrencyAmount.fromRawAmount(USDT, 10000000000),
+  factoryAddress,
+  initCodeHash
 );
 
 export const USDC_WETH = new Pair(
   CurrencyAmount.fromRawAmount(USDC, 10000000000),
-  CurrencyAmount.fromRawAmount(WRAPPED_NATIVE_CURRENCY[1]!, 10000000000)
+  CurrencyAmount.fromRawAmount(WRAPPED_NATIVE_CURRENCY[1]!, 10000000000),
+  factoryAddress,
+  initCodeHash
 );
 
 export const WETH_USDT = new Pair(
   CurrencyAmount.fromRawAmount(USDT, 10000000000),
-  CurrencyAmount.fromRawAmount(WRAPPED_NATIVE_CURRENCY[1]!, 10000000000)
+  CurrencyAmount.fromRawAmount(WRAPPED_NATIVE_CURRENCY[1]!, 10000000000),
+  factoryAddress,
+  initCodeHash
 );
 
 export const USDC_DAI = new Pair(
   CurrencyAmount.fromRawAmount(USDC, 10000000000),
-  CurrencyAmount.fromRawAmount(DAI, 10000000000)
+  CurrencyAmount.fromRawAmount(DAI, 10000000000),
+  factoryAddress,
+  initCodeHash
 );
 
 export const WBTC_WETH = new Pair(
   CurrencyAmount.fromRawAmount(WBTC, 10000000000),
-  CurrencyAmount.fromRawAmount(WRAPPED_NATIVE_CURRENCY[1]!, 10000000000)
+  CurrencyAmount.fromRawAmount(WRAPPED_NATIVE_CURRENCY[1]!, 10000000000),
+  factoryAddress,
+  initCodeHash
 );
 
 export const poolToV3SubgraphPool = (
@@ -245,14 +258,14 @@ export const buildMockV2PoolAccessor: (pools: Pair[]) => V2PoolAccessor = (
       _.find(
         pools,
         (p) =>
-          Pair.getAddress(p.token0, p.token1).toLowerCase() ==
+          Pair.getAddress(p.token0, p.token1, factoryAddress, initCodeHash).toLowerCase() ==
           address.toLowerCase()
       ),
     getPool: (tokenA, tokenB) =>
       _.find(
         pools,
         (p) =>
-          Pair.getAddress(p.token0, p.token1) == Pair.getAddress(tokenA, tokenB)
+          Pair.getAddress(p.token0, p.token1, factoryAddress, initCodeHash) == Pair.getAddress(tokenA, tokenB, factoryAddress, initCodeHash)
       ),
   };
 };

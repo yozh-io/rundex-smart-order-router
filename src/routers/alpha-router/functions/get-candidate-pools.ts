@@ -105,6 +105,8 @@ export type V2GetCandidatePoolsParams = {
   poolProvider: IV2PoolProvider;
   blockedTokenListProvider?: ITokenListProvider;
   chainId: ChainId;
+  factoryAddress: string;
+  initCodeHash: string;
 };
 
 const baseTokensByChain: { [chainId in ChainId]?: Token[] } = {
@@ -578,6 +580,8 @@ export async function getV2CandidatePools({
   poolProvider,
   blockedTokenListProvider,
   chainId,
+  factoryAddress,
+  initCodeHash
 }: V2GetCandidatePoolsParams): Promise<{
   poolAccessor: V2PoolAccessor;
   candidatePools: CandidatePoolsBySelectionCriteria;
@@ -598,7 +602,7 @@ export async function getV2CandidatePools({
 
   const beforeSubgraphPools = Date.now();
 
-  const allPoolsRaw = await subgraphProvider.getPools(tokenIn, tokenOut, {
+  const allPoolsRaw = await subgraphProvider.getPools(factoryAddress, initCodeHash, tokenIn, tokenOut, {
     blockNumber,
   });
 
@@ -704,7 +708,9 @@ export async function getV2CandidatePools({
   if (topNDirectSwaps != 0) {
     const { token0, token1, poolAddress } = poolProvider.getPoolAddress(
       tokenIn,
-      tokenOut
+      tokenOut,
+      factoryAddress,
+      initCodeHash
     );
 
     topByDirectSwapPool = [
@@ -918,7 +924,7 @@ export async function getV2CandidatePools({
 
   const beforePoolsLoad = Date.now();
 
-  const poolAccessor = await poolProvider.getPools(tokenPairs, { blockNumber });
+  const poolAccessor = await poolProvider.getPools(tokenPairs, factoryAddress, initCodeHash, { blockNumber });
 
   metric.putMetric(
     'V2PoolsLoad',
