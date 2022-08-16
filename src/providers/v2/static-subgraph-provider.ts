@@ -64,8 +64,10 @@ export class StaticV2SubgraphProvider implements IV2SubgraphProvider {
   constructor(private chainId: ChainId) {}
 
   public async getPools(
+    factoryAddress: string,
+    initCodeHash: string,
     tokenIn?: Token,
-    tokenOut?: Token
+    tokenOut?: Token,
   ): Promise<V2SubgraphPool[]> {
     log.info('In static subgraph provider for V2');
     const bases = BASES_TO_CHECK_TRADES_AGAINST[this.chainId];
@@ -97,7 +99,7 @@ export class StaticV2SubgraphProvider implements IV2SubgraphProvider {
 
     const subgraphPools: V2SubgraphPool[] = _(pairs)
       .map(([tokenA, tokenB]) => {
-        const poolAddress = Pair.getAddress(tokenA, tokenB);
+        const poolAddress = Pair.getAddress(tokenA, tokenB, factoryAddress, initCodeHash);
 
         if (poolAddressSet.has(poolAddress)) {
           return undefined;

@@ -21,12 +21,16 @@ export type V2RouteWithQuotes = [V2Route, V2AmountQuote[]];
 export interface IV2QuoteProvider {
   getQuotesManyExactIn(
     amountIns: CurrencyAmount[],
-    routes: V2Route[]
+    routes: V2Route[],
+    factoryAddress: string,
+    initCodeHash: string,
   ): Promise<{ routesWithQuotes: V2RouteWithQuotes[] }>;
 
   getQuotesManyExactOut(
     amountOuts: CurrencyAmount[],
-    routes: V2Route[]
+    routes: V2Route[],
+    factoryAddress: string,
+    initCodeHash: string,
   ): Promise<{ routesWithQuotes: V2RouteWithQuotes[] }>;
 }
 
@@ -44,22 +48,28 @@ export class V2QuoteProvider implements IV2QuoteProvider {
 
   public async getQuotesManyExactIn(
     amountIns: CurrencyAmount[],
-    routes: V2Route[]
+    routes: V2Route[],
+    factoryAddress: string,
+    initCodeHash: string,
   ): Promise<{ routesWithQuotes: V2RouteWithQuotes[] }> {
-    return this.getQuotes(amountIns, routes, TradeType.EXACT_INPUT);
+    return this.getQuotes(amountIns, routes, TradeType.EXACT_INPUT, factoryAddress, initCodeHash);
   }
 
   public async getQuotesManyExactOut(
     amountOuts: CurrencyAmount[],
-    routes: V2Route[]
+    routes: V2Route[],
+    factoryAddress: string,
+    initCodeHash: string,
   ): Promise<{ routesWithQuotes: V2RouteWithQuotes[] }> {
-    return this.getQuotes(amountOuts, routes, TradeType.EXACT_OUTPUT);
+    return this.getQuotes(amountOuts, routes, TradeType.EXACT_OUTPUT, factoryAddress, initCodeHash);
   }
 
   private async getQuotes(
     amounts: CurrencyAmount[],
     routes: V2Route[],
-    tradeType: TradeType
+    tradeType: TradeType,
+    factoryAddress: string,
+    initCodeHash: string,
   ): Promise<{ routesWithQuotes: V2RouteWithQuotes[] }> {
     const routesWithQuotes: V2RouteWithQuotes[] = [];
 
@@ -117,7 +127,7 @@ export class V2QuoteProvider implements IV2QuoteProvider {
       ) {
         debugStrs.push(
           `${[
-            routeToString(route),
+            routeToString(route, factoryAddress, initCodeHash),
           ]} Input: ${insufficientInputAmountErrorCount} Reserves: ${insufficientReservesErrorCount} }`
         );
       }

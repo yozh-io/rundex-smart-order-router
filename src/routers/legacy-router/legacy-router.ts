@@ -73,6 +73,8 @@ export class LegacyRouter implements IRouter<LegacyRoutingConfig> {
     amount: CurrencyAmount,
     quoteCurrency: Currency,
     swapType: TradeType,
+    factoryAddress: string,
+    initCodeHash: string,
     swapConfig?: SwapOptions,
     partialRoutingConfig?: Partial<LegacyRoutingConfig>
   ): Promise<SwapRoute | null> {
@@ -81,6 +83,8 @@ export class LegacyRouter implements IRouter<LegacyRoutingConfig> {
         amount.currency,
         quoteCurrency,
         amount,
+        factoryAddress,
+        initCodeHash,
         swapConfig,
         partialRoutingConfig
       );
@@ -90,6 +94,8 @@ export class LegacyRouter implements IRouter<LegacyRoutingConfig> {
       quoteCurrency,
       amount.currency,
       amount,
+      factoryAddress,
+      initCodeHash,
       swapConfig,
       partialRoutingConfig
     );
@@ -99,6 +105,8 @@ export class LegacyRouter implements IRouter<LegacyRoutingConfig> {
     currencyIn: Currency,
     currencyOut: Currency,
     amountIn: CurrencyAmount,
+    factoryAddress: string,
+    initCodeHash: string,
     swapConfig?: SwapOptions,
     routingConfig?: LegacyRoutingConfig
   ): Promise<SwapRoute | null> {
@@ -109,6 +117,8 @@ export class LegacyRouter implements IRouter<LegacyRoutingConfig> {
       amountIn,
       tokenOut,
       routes,
+      factoryAddress,
+      initCodeHash,
       routingConfig
     );
 
@@ -120,7 +130,9 @@ export class LegacyRouter implements IRouter<LegacyRoutingConfig> {
       currencyIn,
       currencyOut,
       TradeType.EXACT_INPUT,
-      routeQuote
+      routeQuote,
+      factoryAddress,
+      initCodeHash
     );
 
     return {
@@ -151,6 +163,8 @@ export class LegacyRouter implements IRouter<LegacyRoutingConfig> {
     currencyIn: Currency,
     currencyOut: Currency,
     amountOut: CurrencyAmount,
+    factoryAddress: string,
+    initCodeHash: string,
     swapConfig?: SwapOptions,
     routingConfig?: LegacyRoutingConfig
   ): Promise<SwapRoute | null> {
@@ -161,6 +175,8 @@ export class LegacyRouter implements IRouter<LegacyRoutingConfig> {
       amountOut,
       tokenIn,
       routes,
+      factoryAddress,
+      initCodeHash,
       routingConfig
     );
 
@@ -172,7 +188,9 @@ export class LegacyRouter implements IRouter<LegacyRoutingConfig> {
       currencyIn,
       currencyOut,
       TradeType.EXACT_OUTPUT,
-      routeQuote
+      routeQuote,
+      factoryAddress,
+      initCodeHash
     );
 
     return {
@@ -203,6 +221,8 @@ export class LegacyRouter implements IRouter<LegacyRoutingConfig> {
     amountIn: CurrencyAmount,
     tokenOut: Token,
     routes: V3Route[],
+    factoryAddress: string,
+    initCodeHash: string,
     routingConfig?: LegacyRoutingConfig
   ): Promise<V3RouteWithValidQuote | null> {
     const { routesWithQuotes: quotesRaw } =
@@ -213,7 +233,7 @@ export class LegacyRouter implements IRouter<LegacyRoutingConfig> {
     const quotes100Percent = _.map(
       quotesRaw,
       ([route, quotes]: V3RouteWithQuotes) =>
-        `${routeToString(route)} : ${quotes[0]?.quote?.toString()}`
+        `${routeToString(route, factoryAddress, initCodeHash)} : ${quotes[0]?.quote?.toString()}`
     );
     log.info({ quotes100Percent }, '100% Quotes');
 
@@ -221,7 +241,9 @@ export class LegacyRouter implements IRouter<LegacyRoutingConfig> {
       routes,
       quotesRaw,
       tokenOut,
-      TradeType.EXACT_INPUT
+      TradeType.EXACT_INPUT,
+      factoryAddress,
+      initCodeHash
     );
 
     return bestQuote;
@@ -231,6 +253,8 @@ export class LegacyRouter implements IRouter<LegacyRoutingConfig> {
     amountOut: CurrencyAmount,
     tokenIn: Token,
     routes: V3Route[],
+    factoryAddress: string,
+    initCodeHash: string,
     routingConfig?: LegacyRoutingConfig
   ): Promise<V3RouteWithValidQuote | null> {
     const { routesWithQuotes: quotesRaw } =
@@ -241,7 +265,9 @@ export class LegacyRouter implements IRouter<LegacyRoutingConfig> {
       routes,
       quotesRaw,
       tokenIn,
-      TradeType.EXACT_OUTPUT
+      TradeType.EXACT_OUTPUT,
+      factoryAddress,
+      initCodeHash
     );
 
     return bestQuote;
@@ -251,7 +277,9 @@ export class LegacyRouter implements IRouter<LegacyRoutingConfig> {
     routes: V3Route[],
     quotesRaw: V3RouteWithQuotes[],
     quoteToken: Token,
-    routeType: TradeType
+    routeType: TradeType,
+    factoryAddress: string,
+    initCodeHash: string
   ): Promise<V3RouteWithValidQuote | null> {
     log.debug(
       `Got ${
@@ -270,7 +298,7 @@ export class LegacyRouter implements IRouter<LegacyRoutingConfig> {
       const { quote, amount } = quotes[0]!;
 
       if (!quote) {
-        Logger.globalLogger().debug(`No quote for ${routeToString(route)}`);
+        Logger.globalLogger().debug(`No quote for ${routeToString(route, factoryAddress, initCodeHash)}`);
         continue;
       }
 
@@ -315,7 +343,7 @@ export class LegacyRouter implements IRouter<LegacyRoutingConfig> {
       log.debug(
         `Quote: ${rq.amount.toFixed(
           Math.min(rq.amount.currency.decimals, 2)
-        )} Route: ${routeToString(rq.route)}`
+        )} Route: ${routeToString(rq.route, factoryAddress, initCodeHash)}`
       );
     }
 
@@ -461,7 +489,9 @@ export class LegacyRouter implements IRouter<LegacyRoutingConfig> {
     tokenInCurrency: Currency,
     tokenOutCurrency: Currency,
     tradeType: TTradeType,
-    routeAmount: V3RouteWithValidQuote
+    routeAmount: V3RouteWithValidQuote,
+    factoryAddress: string,
+    initCodeHash: string,
   ): Trade<Currency, Currency, TTradeType> {
     const { route, amount, quote } = routeAmount;
 
@@ -496,6 +526,8 @@ export class LegacyRouter implements IRouter<LegacyRoutingConfig> {
         ],
         v2Routes: [],
         tradeType: tradeType,
+        factoryAddress,
+        initCodeHash
       });
     } else {
       const quoteCurrency = CurrencyAmount.fromFractionalAmount(
@@ -526,6 +558,8 @@ export class LegacyRouter implements IRouter<LegacyRoutingConfig> {
         ],
         v2Routes: [],
         tradeType: tradeType,
+        factoryAddress,
+        initCodeHash
       });
     }
   }

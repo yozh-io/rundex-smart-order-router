@@ -142,6 +142,8 @@ export abstract class IV2GasModelFactory {
     chainId: number,
     gasPriceWei: BigNumber,
     poolProvider: IV2PoolProvider,
-    token: Token
+    token: Token,
+    factoryAddress: string,
+    initCodeHash: string
   ): Promise<IGasModel<V2RouteWithValidQuote>>;
 }

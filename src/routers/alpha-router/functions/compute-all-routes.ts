@@ -27,7 +27,9 @@ export function computeAllV2Routes(
   tokenIn: Token,
   tokenOut: Token,
   pools: Pair[],
-  maxHops: number
+  maxHops: number,
+  factoryAddress: string,
+  initCodeHash: string
 ): V2Route[] {
   return computeAllRoutes<Pair, V2Route>(
     tokenIn,
@@ -36,7 +38,9 @@ export function computeAllV2Routes(
       return new V2Route(route, tokenIn, tokenOut);
     },
     pools,
-    maxHops
+    maxHops,
+    factoryAddress,
+    initCodeHash
   );
 }
 
@@ -48,7 +52,9 @@ export function computeAllRoutes<
   tokenOut: Token,
   buildRoute: (route: TPool[], tokenIn: Token, tokenOut: Token) => TRoute,
   pools: TPool[],
-  maxHops: number
+  maxHops: number,
+  factoryAddress?: string,
+  initCodeHash?: string
 ): TRoute[] {
   const poolsUsed = Array<boolean>(pools.length).fill(false);
   const routes: TRoute[] = [];
@@ -105,7 +111,7 @@ export function computeAllRoutes<
   computeRoutes(tokenIn, tokenOut, [], poolsUsed);
 
   log.info(
-    { routes: routes.map(routeToString) },
+    { routes: routes.map((route) => routeToString(route, factoryAddress, initCodeHash)) },
     `Computed ${routes.length} possible routes.`
   );
 

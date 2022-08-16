@@ -16,7 +16,9 @@ export function buildTrade<TTradeType extends TradeType>(
   tokenInCurrency: Currency,
   tokenOutCurrency: Currency,
   tradeType: TTradeType,
-  routeAmounts: RouteWithValidQuote[]
+  routeAmounts: RouteWithValidQuote[],
+  factoryAddress: string,
+  initCodeHash: string,
 ): Trade<Currency, Currency, TTradeType> {
   const [v3RouteAmounts, v2RouteAmounts] = _.partition(
     routeAmounts,
@@ -155,7 +157,7 @@ export function buildTrade<TTradeType extends TradeType>(
     }
   );
 
-  const trade = new Trade({ v2Routes, v3Routes, tradeType });
+  const trade = new Trade({ v2Routes, v3Routes, tradeType, factoryAddress, initCodeHash });
 
   return trade;
 }

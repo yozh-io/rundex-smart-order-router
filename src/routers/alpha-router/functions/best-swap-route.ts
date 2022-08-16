@@ -26,6 +26,8 @@ export async function getBestSwapRoute(
   routeType: TradeType,
   chainId: ChainId,
   routingConfig: AlphaRouterConfig,
+  factoryAddress: string,
+  initCodeHash: string,
   gasModel?: IGasModel<V3RouteWithValidQuote>
 ): Promise<{
   quote: CurrencyAmount;
@@ -61,6 +63,8 @@ export async function getBestSwapRoute(
     chainId,
     (rq: RouteWithValidQuote) => rq.quoteAdjustedForGas,
     routingConfig,
+    factoryAddress,
+    initCodeHash,
     gasModel
   );
 
@@ -96,7 +100,7 @@ export async function getBestSwapRoute(
 
   log.info(
     {
-      routes: routeAmountsToString(routeAmounts),
+      routes: routeAmountsToString(routeAmounts, factoryAddress, initCodeHash),
       numSplits: routeAmounts.length,
       amount: amount.toExact(),
       quote: swapRoute.quote.toExact(),
@@ -123,6 +127,8 @@ export async function getBestSwapRouteBy(
   chainId: ChainId,
   by: (routeQuote: RouteWithValidQuote) => CurrencyAmount,
   routingConfig: AlphaRouterConfig,
+  factoryAddress: string,
+  initCodeHash: string,
   gasModel?: IGasModel<V3RouteWithValidQuote>
 ): Promise<
   | {
@@ -495,7 +501,7 @@ export async function getBestSwapRouteBy(
       routeUSDGasEstimates: _.map(
         bestSwap,
         (b) =>
-          `${b.percent}% ${routeToString(b.route)} ${b.gasCostInUSD.toExact()}`
+          `${b.percent}% ${routeToString(b.route, factoryAddress, initCodeHash)} ${b.gasCostInUSD.toExact()}`
       ),
       flatL1GasCostUSD: gasCostL1USD.toExact(),
     },

@@ -20,17 +20,21 @@ export class V2SubgraphProviderWithFallBacks implements IV2SubgraphProvider {
   constructor(private fallbacks: IV2SubgraphProvider[]) {}
 
   public async getPools(
+    factoryAddress?: string,
+    initCodeHash?: string,
     tokenIn?: Token,
     tokenOut?: Token,
-    providerConfig?: ProviderConfig
+    providerConfig?: ProviderConfig,
   ): Promise<V2SubgraphPool[]> {
     for (let i = 0; i < this.fallbacks.length; i++) {
       const provider = this.fallbacks[i]!;
       try {
         const pools = await provider.getPools(
+          factoryAddress,
+          initCodeHash,
           tokenIn,
           tokenOut,
-          providerConfig
+          providerConfig,
         );
         return pools;
       } catch (err) {
