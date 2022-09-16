@@ -7,8 +7,6 @@ src/**.js
 coverage
 *.log
 yarn.lock
-types
-types/*
 .env
 cache/
 .vscode
