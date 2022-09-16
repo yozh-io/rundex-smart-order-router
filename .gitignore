@@ -11,3 +11,4 @@ types
 types/*
 .env
 cache/
+.vscode
