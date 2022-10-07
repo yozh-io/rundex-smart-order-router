@@ -264,6 +264,16 @@ export const ID_TO_NETWORK_NAME = (id: number): ChainName => {
       return ChainName.GNOSIS;
     case 1284:
       return ChainName.MOONBEAM;
+    case 56:
+      return ChainName.SMART_CHAIN;
+    case 43114:
+      return ChainName.AVALANCHE;
+    case 250:
+      return ChainName.FANTOM;
+    case 1666600000:
+      return ChainName.HARMONY;
+    case 1313161554:
+      return ChainName.AURORA;
     default:
       throw new Error(`Unknown chain id: ${id}`);
   }
