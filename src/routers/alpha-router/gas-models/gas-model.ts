@@ -15,7 +15,7 @@ import {
   DAI_RINKEBY_1,
   DAI_RINKEBY_2,
   DAI_ROPSTEN,
-  USDC_ARBITRUM,
+  USDC_ARBITRUM, USDC_BSC,
   USDC_ETHEREUM_GNOSIS,
   USDC_GÖRLI,
   USDC_KOVAN,
@@ -26,14 +26,14 @@ import {
   USDC_POLYGON,
   USDC_ROPSTEN,
   USDT_ARBITRUM,
-  USDT_ARBITRUM_RINKEBY,
+  USDT_ARBITRUM_RINKEBY, USDT_BSC,
   USDT_GÖRLI,
   USDT_KOVAN,
   USDT_MAINNET,
   USDT_OPTIMISM,
   USDT_OPTIMISTIC_KOVAN,
   USDT_ROPSTEN,
-  WBTC_GÖRLI,
+  WBTC_GÖRLI
 } from '../../../providers/token-provider';
 import { IV2PoolProvider } from '../../../providers/v2/pool-provider';
 import {
@@ -70,6 +70,7 @@ export const usdGasTokensByChain: { [chainId in ChainId]?: Token[] } = {
   [ChainId.CELO_ALFAJORES]: [CUSD_CELO_ALFAJORES],
   [ChainId.GNOSIS]: [USDC_ETHEREUM_GNOSIS],
   [ChainId.MOONBEAM]: [USDC_MOONBEAM],
+  [ChainId.SMART_CHAIN]: [USDC_BSC,USDT_BSC],
 };
 
 export type L1ToL2GasCosts = {

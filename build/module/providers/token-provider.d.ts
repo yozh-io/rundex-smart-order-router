@@ -84,6 +84,8 @@ export declare const USDC_MOONBEAM: Token;
 export declare const WGLMR_MOONBEAM: Token;
 export declare const DAI_MOONBEAM: Token;
 export declare const WBTC_MOONBEAM: Token;
+export declare const USDC_BSC: Token;
+export declare const USDT_BSC: Token;
 export declare class TokenProvider implements ITokenProvider {
     private chainId;
     protected multicall2Provider: IMulticallProvider;
