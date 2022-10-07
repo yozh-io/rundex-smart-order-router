@@ -12,7 +12,7 @@ export const V3_CORE_FACTORY_ADDRESSES: AddressMap = {
   ...constructSameAddressMap(FACTORY_ADDRESS),
   [ChainId.CELO]: CELO_V3_CORE_FACTORY_ADDRESSES,
   [ChainId.CELO_ALFAJORES]: CELO_V3_CORE_FACTORY_ADDRESSES,
-  [ChainId.SMART_CHAIN]: CELO_V3_CORE_FACTORY_ADDRESSES,
+  [ChainId.SMART_CHAIN]: '0x3dc623d1d7BFd3F21adED60fD24396D935cF8898',
 
   // TODO: Gnosis + Moonbeam contracts to be deployed
 };

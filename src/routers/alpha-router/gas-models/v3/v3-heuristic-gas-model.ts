@@ -404,6 +404,8 @@ export class V3HeuristicGasModelFactory extends IV3GasModelFactory {
         console.log('usdTokens', usdTokens)
         for (const usdToken of usdTokens) {
           console.log('wrappedCurrency in for', wrappedCurrency)
+          console.log('usdToken for', usdToken);
+          console.log('feeAmount', feeAmount);
           const pool = poolAccessor.getPool(
             wrappedCurrency,
             usdToken,
