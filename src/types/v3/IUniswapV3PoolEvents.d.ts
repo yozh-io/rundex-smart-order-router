@@ -2,10 +2,20 @@
 /* tslint:disable */
 /* eslint-disable */
 
-import { EventFragment } from "@ethersproject/abi";
+import {
+  ethers,
+  EventFilter,
+  Signer,
+  BigNumber,
+  BigNumberish,
+  PopulatedTransaction,
+  BaseContract,
+  ContractTransaction,
+} from "ethers";
+import { BytesLike } from "@ethersproject/bytes";
 import { Listener, Provider } from "@ethersproject/providers";
-import { BaseContract, BigNumber, BigNumberish, ethers, Signer } from "ethers";
-import type { TypedEvent, TypedEventFilter, TypedListener } from "./common";
+import { FunctionFragment, EventFragment, Result } from "@ethersproject/abi";
+import type { TypedEventFilter, TypedEvent, TypedListener } from "./common";
 
 interface IUniswapV3PoolEventsInterface extends ethers.utils.Interface {
   functions: {};

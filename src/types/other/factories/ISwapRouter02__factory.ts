@@ -2,8 +2,8 @@
 /* tslint:disable */
 /* eslint-disable */
 
-import { Provider } from "@ethersproject/providers";
 import { Contract, Signer, utils } from "ethers";
+import { Provider } from "@ethersproject/providers";
 import type { ISwapRouter02, ISwapRouter02Interface } from "../ISwapRouter02";
 
 const _abi = [

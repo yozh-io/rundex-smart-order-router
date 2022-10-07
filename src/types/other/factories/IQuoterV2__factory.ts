@@ -2,8 +2,8 @@
 /* tslint:disable */
 /* eslint-disable */
 
-import { Provider } from "@ethersproject/providers";
 import { Contract, Signer, utils } from "ethers";
+import { Provider } from "@ethersproject/providers";
 import type { IQuoterV2, IQuoterV2Interface } from "../IQuoterV2";
 
 const _abi = [

@@ -2,8 +2,8 @@
 /* tslint:disable */
 /* eslint-disable */
 
-import { Provider } from "@ethersproject/providers";
 import { Contract, Signer, utils } from "ethers";
+import { Provider } from "@ethersproject/providers";
 import type { IERC20Minimal, IERC20MinimalInterface } from "../IERC20Minimal";
 
 const _abi = [

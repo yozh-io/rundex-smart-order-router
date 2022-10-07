@@ -16,6 +16,12 @@ export enum ChainId {
   CELO_ALFAJORES = 44787,
   GNOSIS = 100,
   MOONBEAM = 1284,
+  SMART_CHAIN = 56,
+  AVALANCHE = 43114,
+  FANTOM = 250,
+  HARMONY = 1666600000,
+  HARMONY_TESTNET = 1666700000,
+  AURORA = 1313161554,
 }
 
 // WIP: Gnosis, Moonbeam
@@ -33,6 +39,13 @@ export const SUPPORTED_CHAINS: ChainId[] = [
   ChainId.GÖRLI,
   ChainId.CELO_ALFAJORES,
   ChainId.CELO,
+  ChainId.SMART_CHAIN,
+  ChainId.AVALANCHE,
+  ChainId.FANTOM,
+  ChainId.HARMONY,
+  ChainId.HARMONY_TESTNET,
+  ChainId.AURORA,
+
   // Gnosis and Moonbeam don't yet have contracts deployed yet
 ];
 
@@ -95,8 +108,18 @@ export const ID_TO_CHAIN_ID = (id: number): ChainId => {
       return ChainId.CELO_ALFAJORES;
     case 100:
       return ChainId.GNOSIS;
-    case 1284:
-      return ChainId.MOONBEAM;
+    case 56:
+      return ChainId.SMART_CHAIN;
+    case 43114:
+      return ChainId.AVALANCHE;
+    case 250:
+      return ChainId.FANTOM;
+    case 1666600000:
+      return ChainId.HARMONY;
+    case 1666700000:
+      return ChainId.HARMONY_TESTNET;
+    case 1313161554:
+      return ChainId.AURORA;
     default:
       throw new Error(`Unknown chain id: ${id}`);
   }
@@ -118,6 +141,12 @@ export enum ChainName {
   CELO_ALFAJORES = 'celo-alfajores',
   GNOSIS = 'gnosis-mainnet',
   MOONBEAM = 'moonbeam-mainnet',
+  SMART_CHAIN = 'smart_chain',
+  AVALANCHE = 'avalanche',
+  FANTOM = 'fantom',
+  HARMONY = 'harmony',
+  HARMONY_TESTNET = 'harmony_testnet',
+  AURORA = 'aurora',
 }
 
 export enum NativeCurrencyName {
@@ -385,6 +414,49 @@ export const WRAPPED_NATIVE_CURRENCY: { [chainId in ChainId]: Token } = {
     'WGLMR',
     'Wrapped GLMR'
   ),
+  [ChainId.HARMONY]: new Token(
+    ChainId.HARMONY,
+    '0xcf664087a5bb0237a0bad6742852ec6c8d69a27a',
+    18,
+    'WONE',
+    'Wrapped ONE'
+  ),
+  [ChainId.HARMONY_TESTNET]: new Token(
+    ChainId.HARMONY_TESTNET,
+    '0x7466d7d0c21fa05f32f5a0fa27e12bdc06348ce2',
+    18,
+    'WONE',
+    'Wrapped ONE'
+  ),
+  [ChainId.SMART_CHAIN]: new Token(
+    ChainId.SMART_CHAIN,
+    '0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c',
+    18,
+    'WBNB',
+    'Wrapped BNB'
+  ),
+  [ChainId.FANTOM]: new Token(
+    ChainId.FANTOM,
+    '0x21be370D5312f44cB42ce377BC9b8a0cEF1A4C83',
+    18,
+    'WFTM',
+    'Wrapped Fantom'
+  ),
+  [ChainId.AURORA]: new Token(
+    ChainId.AURORA,
+    '0xC9BdeEd33CD01541e1eeD10f90519d2C06Fe3feB',
+    18,
+    'WETH',
+    'Wrapped Ether'
+  ),
+  [ChainId.AVALANCHE]: new Token(
+    ChainId.AVALANCHE,
+    '0xB31f66AA3C1e785363F0875A1B74E27b85FD66c7',
+    18,
+    'WAVAX',
+    'Wrapped AVAX'
+  ),
+
 };
 
 function isMatic(

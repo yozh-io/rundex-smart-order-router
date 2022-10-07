@@ -17,6 +17,6 @@ export declare function constructSameAddressMap<T extends string>(address: T, ad
     [chainId: number]: T;
 };
 export declare const WETH9: {
-    [chainId in Exclude<ChainId, ChainId.POLYGON | ChainId.POLYGON_MUMBAI | ChainId.CELO | ChainId.CELO_ALFAJORES | ChainId.GNOSIS | ChainId.MOONBEAM>]: Token;
+    [chainId in Exclude<ChainId, ChainId.POLYGON | ChainId.POLYGON_MUMBAI | ChainId.CELO | ChainId.CELO_ALFAJORES | ChainId.GNOSIS | ChainId.MOONBEAM | ChainId.SMART_CHAIN | ChainId.AVALANCHE | ChainId.FANTOM | ChainId.HARMONY | ChainId.HARMONY_TESTNET | ChainId.AURORA>]: Token;
 };
 export {};

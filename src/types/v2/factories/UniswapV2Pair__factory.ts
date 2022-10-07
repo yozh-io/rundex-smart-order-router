@@ -2,8 +2,8 @@
 /* tslint:disable */
 /* eslint-disable */
 
+import { Signer, utils, Contract, ContractFactory, Overrides } from "ethers";
 import { Provider, TransactionRequest } from "@ethersproject/providers";
-import { Contract, ContractFactory, Overrides, Signer, utils } from "ethers";
 import type { UniswapV2Pair, UniswapV2PairInterface } from "../UniswapV2Pair";
 
 const _abi = [

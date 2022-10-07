@@ -68,7 +68,13 @@ export const WETH9: {
     | ChainId.CELO_ALFAJORES
     | ChainId.GNOSIS
     | ChainId.MOONBEAM
-  >]: Token;
+    | ChainId.SMART_CHAIN
+    | ChainId.AVALANCHE
+    | ChainId.FANTOM
+    | ChainId.HARMONY
+    | ChainId.HARMONY_TESTNET
+    | ChainId.AURORA
+    >]: Token;
 } = {
   [ChainId.MAINNET]: new Token(
     ChainId.MAINNET,
