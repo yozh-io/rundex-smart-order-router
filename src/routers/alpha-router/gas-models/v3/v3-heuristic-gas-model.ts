@@ -370,7 +370,7 @@ export class V3HeuristicGasModelFactory extends IV3GasModelFactory {
   ): Promise<Pool> {
     const usdTokens = usdGasTokensByChain[chainId];
     const wrappedCurrency = WRAPPED_NATIVE_CURRENCY[chainId]!;
-
+    console.log('wrappedCurrency', wrappedCurrency)
     if (!usdTokens) {
       throw new Error(
         `Could not find a USD token for computing gas costs on ${chainId}`
@@ -392,7 +392,7 @@ export class V3HeuristicGasModelFactory extends IV3GasModelFactory {
       .value();
 
     const poolAccessor = await poolProvider.getPools(usdPools);
-
+    console.log('poolAccessor', poolAccessor)
     const pools = _([
       FeeAmount.HIGH,
       FeeAmount.MEDIUM,
@@ -401,13 +401,15 @@ export class V3HeuristicGasModelFactory extends IV3GasModelFactory {
     ])
       .flatMap((feeAmount) => {
         const pools = [];
-
+        console.log('usdTokens', usdTokens)
         for (const usdToken of usdTokens) {
+          console.log('wrappedCurrency in for', wrappedCurrency)
           const pool = poolAccessor.getPool(
             wrappedCurrency,
             usdToken,
             feeAmount
           );
+          console.log('pool', pool)
           if (pool) {
             pools.push(pool);
           }
@@ -417,7 +419,7 @@ export class V3HeuristicGasModelFactory extends IV3GasModelFactory {
       })
       .compact()
       .value();
-
+    console.log('pools', pools)
     if (pools.length == 0) {
       const message = `Could not find a USD/${wrappedCurrency.symbol} pool for computing gas costs.`;
       log.error({ pools }, message);
