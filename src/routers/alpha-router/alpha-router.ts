@@ -123,7 +123,6 @@ import {
   PoolId,
 } from './functions/get-candidate-pools';
 import {
-  IGasModel,
   IV2GasModelFactory,
   IV3GasModelFactory,
 } from './gas-models/gas-model';
@@ -140,6 +139,7 @@ export type AlphaRouterParams = {
    * The Web3 provider for getting on-chain data.
    */
   provider: BaseProvider;
+  multicallAddress: string;
   /**
    * The provider to use for making multicalls. Used for getting on-chain data
    * like pools, tokens, quotes in batch.
@@ -319,6 +319,7 @@ export class AlphaRouter
 {
   protected chainId: ChainId;
   protected provider: BaseProvider;
+  protected multicallAddress: string;
   protected multicall2Provider: UniswapMulticallProvider;
   protected v3SubgraphProvider: IV3SubgraphProvider;
   protected v3PoolProvider: IV3PoolProvider;
@@ -340,6 +341,7 @@ export class AlphaRouter
   constructor({
     chainId,
     provider,
+    multicallAddress,
     multicall2Provider,
     v3PoolProvider,
     v3QuoteProvider,
@@ -359,9 +361,10 @@ export class AlphaRouter
   }: AlphaRouterParams) {
     this.chainId = chainId;
     this.provider = provider;
+    this.multicallAddress = multicallAddress;
     this.multicall2Provider =
       multicall2Provider ??
-      new UniswapMulticallProvider(chainId, provider, 375_000);
+      new UniswapMulticallProvider(chainId, provider, 375_000,multicallAddress);
     this.v3PoolProvider =
       v3PoolProvider ??
       new CachingV3PoolProvider(
@@ -851,14 +854,6 @@ export class AlphaRouter
 
     const protocolsSet = new Set(protocols ?? []);
 
-    const gasModel = await this.v3GasModelFactory.buildGasModel(
-      this.chainId,
-      gasPriceWei,
-      this.v3PoolProvider,
-      quoteToken,
-      this.l2GasDataProvider
-    );
-
     if (
       (protocolsSet.size == 0 ||
         (protocolsSet.has(Protocol.V2) && protocolsSet.has(Protocol.V3))) &&
@@ -872,7 +867,7 @@ export class AlphaRouter
           amounts,
           percents,
           quoteToken,
-          gasModel,
+          gasPriceWei,
           tradeType,
           routingConfig
         )
@@ -904,7 +899,7 @@ export class AlphaRouter
             amounts,
             percents,
             quoteToken,
-            gasModel,
+            gasPriceWei,
             tradeType,
             routingConfig
           )
@@ -960,7 +955,6 @@ export class AlphaRouter
       routingConfig,
       factoryAddress,
       initCodeHash,
-      gasModel
     );
 
     if (!swapRouteRaw) {
@@ -1071,7 +1065,7 @@ export class AlphaRouter
     amounts: CurrencyAmount[],
     percents: number[],
     quoteToken: Token,
-    gasModel: IGasModel<V3RouteWithValidQuote>,
+    gasPriceWei: BigNumber,
     swapType: TradeType,
     routingConfig: AlphaRouterConfig
   ): Promise<{
@@ -1153,7 +1147,13 @@ export class AlphaRouter
     const { routesWithQuotes } = await quoteFn(amounts, routes, {
       blockNumber: routingConfig.blockNumber,
     });
-
+    const gasModel = await this.v3GasModelFactory.buildGasModel(
+      this.chainId,
+      gasPriceWei,
+      this.v3PoolProvider,
+      quoteToken,
+      this.l2GasDataProvider
+    );
     metric.putMetric(
       'V3QuotesLoad',
       Date.now() - beforeQuotes,

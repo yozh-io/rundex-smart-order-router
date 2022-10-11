@@ -107,7 +107,6 @@ export class V3PoolProvider implements IV3PoolProvider {
         tokenB,
         feeAmount
       );
-
       if (poolAddressSet.has(poolAddress)) {
         continue;
       }
@@ -231,9 +230,7 @@ export class V3PoolProvider implements IV3PoolProvider {
       tokenB: token1,
       fee: feeAmount,
     });
-
     this.POOL_ADDRESS_CACHE[cacheKey] = poolAddress;
-
     return { poolAddress, token0, token1 };
   }
 
@@ -255,7 +252,6 @@ export class V3PoolProvider implements IV3PoolProvider {
     }, this.retryOptions);
 
     log.debug(`Pool data fetched as of block ${blockNumber}`);
-
     return results;
   }
 }

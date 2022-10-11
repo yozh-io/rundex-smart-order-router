@@ -274,7 +274,7 @@ export class V3QuoteProvider implements IV3QuoteProvider {
   ) {
     const quoterAddress = quoterAddressOverride
       ? quoterAddressOverride
-      : QUOTER_V2_ADDRESSES[this.chainId];
+      : QUOTER_V2_ADDRESSES[1];
 
     if (!quoterAddress) {
       throw new Error(

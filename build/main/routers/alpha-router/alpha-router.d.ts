@@ -25,6 +25,7 @@ export declare type AlphaRouterParams = {
      * The Web3 provider for getting on-chain data.
      */
     provider: BaseProvider;
+    multicallAddress: string;
     /**
      * The provider to use for making multicalls. Used for getting on-chain data
      * like pools, tokens, quotes in batch.
@@ -193,6 +194,7 @@ export declare type AlphaRouterConfig = {
 export declare class AlphaRouter implements IRouter<AlphaRouterConfig>, ISwapToRatio<AlphaRouterConfig, SwapAndAddConfig> {
     protected chainId: ChainId;
     protected provider: BaseProvider;
+    protected multicallAddress: string;
     protected multicall2Provider: UniswapMulticallProvider;
     protected v3SubgraphProvider: IV3SubgraphProvider;
     protected v3PoolProvider: IV3PoolProvider;
@@ -208,7 +210,7 @@ export declare class AlphaRouter implements IRouter<AlphaRouterConfig>, ISwapToR
     protected tokenValidatorProvider?: ITokenValidatorProvider;
     protected blockedTokenListProvider?: ITokenListProvider;
     protected l2GasDataProvider?: IL2GasDataProvider<OptimismGasData> | IL2GasDataProvider<ArbitrumGasData>;
-    constructor({ chainId, provider, multicall2Provider, v3PoolProvider, v3QuoteProvider, v2PoolProvider, v2QuoteProvider, v2SubgraphProvider, tokenProvider, blockedTokenListProvider, v3SubgraphProvider, gasPriceProvider, v3GasModelFactory, v2GasModelFactory, swapRouterProvider, optimismGasDataProvider, tokenValidatorProvider, arbitrumGasDataProvider, }: AlphaRouterParams);
+    constructor({ chainId, provider, multicallAddress, multicall2Provider, v3PoolProvider, v3QuoteProvider, v2PoolProvider, v2QuoteProvider, v2SubgraphProvider, tokenProvider, blockedTokenListProvider, v3SubgraphProvider, gasPriceProvider, v3GasModelFactory, v2GasModelFactory, swapRouterProvider, optimismGasDataProvider, tokenValidatorProvider, arbitrumGasDataProvider, }: AlphaRouterParams);
     routeToRatio(token0Balance: CurrencyAmount, token1Balance: CurrencyAmount, position: Position, factoryAddress: string, initCodeHash: string, swapAndAddConfig: SwapAndAddConfig, swapAndAddOptions?: SwapAndAddOptions, routingConfig?: Partial<AlphaRouterConfig>): Promise<SwapToRatioResponse>;
     /**
      * @inheritdoc IRouter

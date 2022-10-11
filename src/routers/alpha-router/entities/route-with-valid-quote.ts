@@ -96,17 +96,17 @@ export class V2RouteWithValidQuote implements IV2RouteWithValidQuote {
   }
 
   constructor({
-    amount,
-    rawQuote,
-    percent,
-    route,
-    gasModel,
-    quoteToken,
-    tradeType,
-    v2PoolProvider,
-    factoryAddress,
-    initCodeHash
-  }: V2RouteWithValidQuoteParams) {
+                amount,
+                rawQuote,
+                percent,
+                route,
+                gasModel,
+                quoteToken,
+                tradeType,
+                v2PoolProvider,
+                factoryAddress,
+                initCodeHash
+              }: V2RouteWithValidQuoteParams) {
     this.amount = amount;
     this.rawQuote = rawQuote;
     this.quote = CurrencyAmount.fromRawAmount(quoteToken, rawQuote.toString());
@@ -194,18 +194,18 @@ export class V3RouteWithValidQuote implements IV3RouteWithValidQuote {
   }
 
   constructor({
-    amount,
-    rawQuote,
-    sqrtPriceX96AfterList,
-    initializedTicksCrossedList,
-    quoterGasEstimate,
-    percent,
-    route,
-    gasModel,
-    quoteToken,
-    tradeType,
-    v3PoolProvider,
-  }: V3RouteWithValidQuoteParams) {
+                amount,
+                rawQuote,
+                sqrtPriceX96AfterList,
+                initializedTicksCrossedList,
+                quoterGasEstimate,
+                percent,
+                route,
+                gasModel,
+                quoteToken,
+                tradeType,
+                v3PoolProvider,
+              }: V3RouteWithValidQuoteParams) {
     this.amount = amount;
     this.rawQuote = rawQuote;
     this.sqrtPriceX96AfterList = sqrtPriceX96AfterList;
