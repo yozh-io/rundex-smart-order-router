@@ -98,6 +98,8 @@ export const ID_TO_CHAIN_ID = (id: number): ChainId => {
       return ChainId.ARBITRUM_ONE;
     case 421611:
       return ChainId.ARBITRUM_RINKEBY;
+    case 1284:
+      return ChainId.MOONBEAM;
     case 137:
       return ChainId.POLYGON;
     case 80001:
