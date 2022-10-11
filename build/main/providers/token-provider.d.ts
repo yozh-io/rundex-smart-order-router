@@ -86,6 +86,17 @@ export declare const DAI_MOONBEAM: Token;
 export declare const WBTC_MOONBEAM: Token;
 export declare const USDC_BSC: Token;
 export declare const USDT_BSC: Token;
+export declare const USDC_AVALANCHE: Token;
+export declare const USDCE_AVALANCHE: Token;
+export declare const USDTE_AVALANCHE: Token;
+export declare const FUSD_FANTOM: Token;
+export declare const fUSDT_FANTOM: Token;
+export declare const USDC_FANTOM: Token;
+export declare const USDC_HARMONY: Token;
+export declare const USDT_HARMONY: Token;
+export declare const USDT_AURORA: Token;
+export declare const USDC_AURORA: Token;
+export declare const DAI_AURORA: Token;
 export declare class TokenProvider implements ITokenProvider {
     private chainId;
     protected multicall2Provider: IMulticallProvider;

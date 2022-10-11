@@ -526,6 +526,95 @@ export const USDT_BSC = new Token(
   'USDT'
 );
 
+export const USDC_AVALANCHE = new Token(
+  ChainId.AVALANCHE,
+  '0xB97EF9Ef8734C71904D8002F8b6Bc66Dd9c48a6E',
+  6,
+  'USDC',
+  'USDC'
+);
+
+export const USDCE_AVALANCHE = new Token(
+  ChainId.AVALANCHE,
+  '0xA7D7079b0FEaD91F3e65f86E8915Cb59c1a4C664',
+  6,
+  'USDC.e',
+  'USDC'
+);
+
+export const USDTE_AVALANCHE = new Token(
+  ChainId.AVALANCHE,
+  '0xc7198437980c041c805A1EDcbA50c1Ce5db95118',
+  6,
+  'USDT.e',
+  'Tether USD'
+);
+
+export const FUSD_FANTOM = new Token(
+  ChainId.FANTOM,
+  '0xAd84341756Bf337f5a0164515b1f6F993D194E1f',
+  18,
+  'FUSD',
+  'Fantom USD'
+);
+
+export const fUSDT_FANTOM = new Token(
+  ChainId.FANTOM,
+  '0x049d68029688eAbF473097a2fC38ef61633A3C7A',
+  6,
+  'fUSDT',
+  'Frapped USDT'
+);
+
+export const USDC_FANTOM = new Token(
+  ChainId.FANTOM,
+  '0x04068DA6C83AFCFA0e13ba15A6696662335D5B75',
+  6,
+  'USDC',
+  'USD Coin'
+);
+
+export const USDC_HARMONY = new Token(
+  ChainId.HARMONY,
+  '0x985458e523db3d53125813ed68c274899e9dfab4',
+  6,
+  '1USDC',
+  'USD Coin'
+);
+
+export const USDT_HARMONY = new Token(
+  ChainId.HARMONY,
+  '0x3c2b8be99c50593081eaa2a724f0b8285f5aba8f',
+  6,
+  '1USDT',
+  'Tether USD'
+);
+
+export const USDT_AURORA = new Token(
+  ChainId.AURORA,
+  '0x4988a896b1227218e4a686fde5eabdcabd91571f',
+  6,
+  'USDT.e',
+  'TetherUS'
+);
+
+export const USDC_AURORA = new Token(
+  ChainId.AURORA,
+  '0xb12bfca5a55806aaf64e99521918a4bf0fc40802',
+  6,
+  'USDC',
+  'USD Coin'
+);
+
+export const DAI_AURORA = new Token(
+  ChainId.AURORA,
+  '0xe3520349f477a5f6eb06107066048508498a291b',
+  18,
+  'DAI',
+  'Dai Stablecoi'
+);
+
+
 export class TokenProvider implements ITokenProvider {
   constructor(
     private chainId: ChainId,
