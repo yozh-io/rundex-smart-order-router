@@ -3,9 +3,8 @@ import { TradeType } from '@uniswap/sdk-core';
 import { ChainId } from '../../../util';
 import { CurrencyAmount } from '../../../util/amounts';
 import { AlphaRouterConfig } from '../alpha-router';
-import { IGasModel } from '../gas-models';
-import { RouteWithValidQuote, V3RouteWithValidQuote } from './../entities/route-with-valid-quote';
-export declare function getBestSwapRoute(amount: CurrencyAmount, percents: number[], routesWithValidQuotes: RouteWithValidQuote[], routeType: TradeType, chainId: ChainId, routingConfig: AlphaRouterConfig, factoryAddress: string, initCodeHash: string, gasModel?: IGasModel<V3RouteWithValidQuote>): Promise<{
+import { RouteWithValidQuote } from './../entities/route-with-valid-quote';
+export declare function getBestSwapRoute(amount: CurrencyAmount, percents: number[], routesWithValidQuotes: RouteWithValidQuote[], routeType: TradeType, chainId: ChainId, routingConfig: AlphaRouterConfig, factoryAddress: string, initCodeHash: string): Promise<{
     quote: CurrencyAmount;
     quoteGasAdjusted: CurrencyAmount;
     estimatedGasUsed: BigNumber;
@@ -15,7 +14,7 @@ export declare function getBestSwapRoute(amount: CurrencyAmount, percents: numbe
 } | null>;
 export declare function getBestSwapRouteBy(routeType: TradeType, percentToQuotes: {
     [percent: number]: RouteWithValidQuote[];
-}, percents: number[], chainId: ChainId, by: (routeQuote: RouteWithValidQuote) => CurrencyAmount, routingConfig: AlphaRouterConfig, factoryAddress: string, initCodeHash: string, gasModel?: IGasModel<V3RouteWithValidQuote>): Promise<{
+}, percents: number[], chainId: ChainId, by: (routeQuote: RouteWithValidQuote) => CurrencyAmount, routingConfig: AlphaRouterConfig, factoryAddress: string, initCodeHash: string): Promise<{
     quote: CurrencyAmount;
     quoteGasAdjusted: CurrencyAmount;
     estimatedGasUsed: BigNumber;
