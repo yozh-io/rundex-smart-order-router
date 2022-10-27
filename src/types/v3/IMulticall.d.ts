@@ -2,20 +2,22 @@
 /* tslint:disable */
 /* eslint-disable */
 
-import { FunctionFragment, Result } from "@ethersproject/abi";
+import {
+  ethers,
+  EventFilter,
+  Signer,
+  BigNumber,
+  BigNumberish,
+  PopulatedTransaction,
+  BaseContract,
+  ContractTransaction,
+  PayableOverrides,
+  CallOverrides,
+} from "ethers";
 import { BytesLike } from "@ethersproject/bytes";
 import { Listener, Provider } from "@ethersproject/providers";
-import {
-  BaseContract,
-  BigNumber,
-  CallOverrides,
-  ContractTransaction,
-  ethers,
-  PayableOverrides,
-  PopulatedTransaction,
-  Signer,
-} from "ethers";
-import type { TypedEvent, TypedEventFilter, TypedListener } from "./common";
+import { FunctionFragment, EventFragment, Result } from "@ethersproject/abi";
+import type { TypedEventFilter, TypedEvent, TypedListener } from "./common";
 
 interface IMulticallInterface extends ethers.utils.Interface {
   functions: {

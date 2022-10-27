@@ -174,6 +174,9 @@ const BASES_TO_CHECK_TRADES_AGAINST: ChainTokenList = {
   [ChainId.AURORA]: [
     WRAPPED_NATIVE_CURRENCY[ChainId.AURORA],
   ],
+  [ChainId.KLAYTN]: [
+    WRAPPED_NATIVE_CURRENCY[ChainId.KLAYTN],
+  ],
 };
 
 /**

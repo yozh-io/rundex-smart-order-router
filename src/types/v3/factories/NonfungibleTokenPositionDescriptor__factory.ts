@@ -2,15 +2,15 @@
 /* tslint:disable */
 /* eslint-disable */
 
-import { Provider, TransactionRequest } from "@ethersproject/providers";
 import {
+  Signer,
+  utils,
   BytesLike,
   Contract,
   ContractFactory,
   Overrides,
-  Signer,
-  utils,
 } from "ethers";
+import { Provider, TransactionRequest } from "@ethersproject/providers";
 import type {
   NonfungibleTokenPositionDescriptor,
   NonfungibleTokenPositionDescriptorInterface,

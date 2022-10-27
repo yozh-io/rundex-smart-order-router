@@ -92,6 +92,8 @@ export declare const USDTE_AVALANCHE: Token;
 export declare const FUSD_FANTOM: Token;
 export declare const fUSDT_FANTOM: Token;
 export declare const USDC_FANTOM: Token;
+export declare const USDC_KLAYTN: Token;
+export declare const DAI_KLAYTN: Token;
 export declare const USDC_HARMONY: Token;
 export declare const USDT_HARMONY: Token;
 export declare const USDT_AURORA: Token;

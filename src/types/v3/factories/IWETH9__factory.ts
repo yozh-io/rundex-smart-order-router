@@ -2,8 +2,8 @@
 /* tslint:disable */
 /* eslint-disable */
 
-import { Provider } from "@ethersproject/providers";
 import { Contract, Signer, utils } from "ethers";
+import { Provider } from "@ethersproject/providers";
 import type { IWETH9, IWETH9Interface } from "../IWETH9";
 
 const _abi = [

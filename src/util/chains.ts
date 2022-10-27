@@ -21,6 +21,7 @@ export enum ChainId {
   FANTOM = 250,
   HARMONY = 1666600000,
   HARMONY_TESTNET = 1666700000,
+  KLAYTN = 8217,
   AURORA = 1313161554,
 }
 
@@ -42,6 +43,7 @@ export const SUPPORTED_CHAINS: ChainId[] = [
   ChainId.SMART_CHAIN,
   ChainId.AVALANCHE,
   ChainId.FANTOM,
+  ChainId.KLAYTN,
   ChainId.HARMONY,
   ChainId.HARMONY_TESTNET,
   ChainId.AURORA,
@@ -116,6 +118,8 @@ export const ID_TO_CHAIN_ID = (id: number): ChainId => {
       return ChainId.AVALANCHE;
     case 250:
       return ChainId.FANTOM;
+    case 8217:
+      return ChainId.KLAYTN;
     case 1666600000:
       return ChainId.HARMONY;
     case 1666700000:
@@ -146,6 +150,7 @@ export enum ChainName {
   SMART_CHAIN = 'smart_chain',
   AVALANCHE = 'avalanche',
   FANTOM = 'fantom',
+  KLAYTN = 'klaytn',
   HARMONY = 'harmony',
   HARMONY_TESTNET = 'harmony_testnet',
   AURORA = 'aurora',
@@ -272,6 +277,8 @@ export const ID_TO_NETWORK_NAME = (id: number): ChainName => {
       return ChainName.AVALANCHE;
     case 250:
       return ChainName.FANTOM;
+    case 8217:
+      return ChainName.KLAYTN;
     case 1666600000:
       return ChainName.HARMONY;
     case 1313161554:
@@ -453,6 +460,13 @@ export const WRAPPED_NATIVE_CURRENCY: { [chainId in ChainId]: Token } = {
     18,
     'WFTM',
     'Wrapped Fantom'
+  ),
+  [ChainId.KLAYTN]: new Token(
+    ChainId.KLAYTN,
+    '0xe4f05a66ec68b54a58b17c22107b02e0232cc817',
+    18,
+    'WKLAY',
+    'Wrapped Klay'
   ),
   [ChainId.AURORA]: new Token(
     ChainId.AURORA,

@@ -2,8 +2,8 @@
 /* tslint:disable */
 /* eslint-disable */
 
+import { Signer, utils, Contract, ContractFactory, Overrides } from "ethers";
 import { Provider, TransactionRequest } from "@ethersproject/providers";
-import { Contract, ContractFactory, Overrides, Signer, utils } from "ethers";
 import type { QuoterV2, QuoterV2Interface } from "../QuoterV2";
 
 const _abi = [

@@ -77,6 +77,7 @@ export const WETH9: {
     | ChainId.HARMONY
     | ChainId.HARMONY_TESTNET
     | ChainId.AURORA
+    | ChainId.KLAYTN
     >]: Token;
 } = {
   [ChainId.MAINNET]: new Token(

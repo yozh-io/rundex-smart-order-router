@@ -20,6 +20,7 @@ export declare enum ChainId {
     FANTOM = 250,
     HARMONY = 1666600000,
     HARMONY_TESTNET = 1666700000,
+    KLAYTN = 8217,
     AURORA = 1313161554
 }
 export declare const SUPPORTED_CHAINS: ChainId[];
@@ -46,6 +47,7 @@ export declare enum ChainName {
     SMART_CHAIN = "smart_chain",
     AVALANCHE = "avalanche",
     FANTOM = "fantom",
+    KLAYTN = "klaytn",
     HARMONY = "harmony",
     HARMONY_TESTNET = "harmony_testnet",
     AURORA = "aurora"

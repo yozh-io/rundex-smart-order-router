@@ -574,6 +574,22 @@ export const USDC_FANTOM = new Token(
   'USD Coin'
 );
 
+export const USDC_KLAYTN = new Token(
+  ChainId.FANTOM,
+  '0xcee8faf64bb97a73bb51e115aa89c17ffa8dd167',
+  6,
+  'oUSDT',
+  'Orbit Bridge Klaytn USD Tether'
+);
+
+export const DAI_KLAYTN = new Token(
+  ChainId.FANTOM,
+  '0x5c74070fdea071359b86082bd9f9b3deaafbe32b',
+  18,
+  'KDAI',
+  'Klaytn Dai'
+);
+
 export const USDC_HARMONY = new Token(
   ChainId.HARMONY,
   '0x985458e523db3d53125813ed68c274899e9dfab4',
